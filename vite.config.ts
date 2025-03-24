@@ -20,7 +20,7 @@ export default defineConfig({
       },
       manifest: {
         name: "Kudrat PRO",
-        short_name: "imp",
+        short_name: "kdr",
         description: "CRM for Kudrat 2010",
         theme_color: "#1E1E1E",
         background_color: "#fff",

@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'pro.kudrat.2010',
+  appId: 'pro.kudrat',
   appName: 'kudrat-pro',
   webDir: 'dist',
   plugins: {
