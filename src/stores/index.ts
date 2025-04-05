@@ -27,6 +27,8 @@ export const useIndexStore = defineStore('index', () => {
     }
 
     function setAPIHref(server: Server) {
+        console.log(server);
+        
         apiHref.value = server.link
         localStorage.setItem('ip_server', server.link)
         localStorage.setItem('ip_token', server.token)

@@ -28,7 +28,7 @@ onMounted(() => {
             headers: {
                 'Authorization': 'Basic ' + item.token
             }
-        }).then(res => projectsListRef.value = [...projectsListRef.value, ...res.data.map((it: any) => {return {...it, server: item.link}})])
+        }).then(res => projectsListRef.value = [...projectsListRef.value, ...res.data.map((it: any) => {return {...it, server: item}})])
         .catch(err => toasterStore.add({
             title: err.code,
             descr: err.message,

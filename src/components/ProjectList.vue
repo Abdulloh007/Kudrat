@@ -8,6 +8,7 @@ section.ip-projects
 
 <script setup lang="ts">
 import type { Server } from '@/models/server';
+import router from '@/router';
 import { useIndexStore } from '@/stores';
 
 const indexStore = useIndexStore() 
@@ -17,8 +18,9 @@ interface Props {
 }
 const { list } = defineProps<Props>()
 
-function setServer(server: Server) {
-    indexStore.setAPIHref(server)
+function setServer(project: any) {
+    indexStore.setAPIHref(project.server)
+    router.push('/project/' + project.id)
 }
 
 </script>
