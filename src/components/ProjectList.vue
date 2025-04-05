@@ -1,18 +1,26 @@
 <template lang="pug">
 section.ip-projects
     .ip-container.ip-dfw
-        RouterLink.ip-project(v-for="item in list" :to="'/project/' + item.id")
+        RouterLink.ip-project(v-for="item in list" :to="'/project/' + item.id" @click="setServer(item)")
             img(:src="'data:image;base64,' + item.logo")
             h4 {{ item.title }}
 </template>
 
 <script setup lang="ts">
-    interface Props {
-        list: any[]
-    }
-    const {list} = defineProps<Props>()
-    
-    
+import type { Server } from '@/models/server';
+import { useIndexStore } from '@/stores';
+
+const indexStore = useIndexStore() 
+
+interface Props {
+    list: any[]
+}
+const { list } = defineProps<Props>()
+
+function setServer(server: Server) {
+    indexStore.setAPIHref(server)
+}
+
 </script>
 
 <style scoped lang="scss">

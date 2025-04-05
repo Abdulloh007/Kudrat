@@ -63,12 +63,12 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to, from) => {
-  if (!isAuthenticated && to.name !== 'auth') {
-    return { name: 'auth' }
-  } else if (isAuthenticated && to.name == 'auth') {
-    return { name: 'projects' }
-  }
-})
+// router.beforeEach(async (to, from) => {
+  // if (!isAuthenticated && to.name !== 'auth') {
+  //   return { name: 'auth' }
+  // } else if (isAuthenticated && to.name == 'auth') {
+    // return { name: 'projects' }
+  // }
+// })
 
 export default router
