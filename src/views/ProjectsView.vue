@@ -7,6 +7,7 @@ import { useIndexStore } from '@/stores';
 import { UseLoaderStore } from '@/stores/loader';
 import { useToasterStore } from '@/stores/toaster';
 import type { Server } from '@/models/server'
+import { Capacitor } from '@capacitor/core'
 
 const projectsListRef = ref<any[]>([])
 const store = useIndexStore()
@@ -24,7 +25,7 @@ const newServer = ref<Server>({
 onMounted(() => {
     indexStore.servers.map(item => {
         loaderStore.isActive = true
-        axios.get(item.link + '/api/projects', {
+        axios.get((Capacitor.isNativePlatform() ? item.link : '') + '/api/projects', {
             headers: {
                 'Authorization': 'Basic ' + item.token
             }

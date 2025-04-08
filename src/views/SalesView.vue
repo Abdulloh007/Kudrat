@@ -31,38 +31,75 @@ const toasterStore = useToasterStore()
 const indexStore = useIndexStore()
 
 onMounted(() => {
-    loaderStore.isActive = true
-    axios.get(indexStore.apiHref + '/api/sales', {
-        headers: {
-            'Authorization': 'Basic ' + indexStore.token
-        }
-    }).then(res => {
-        sales.value = res.data
-
-        sales.value.map(item => {
-            // console.log(item);
-
-            if (clients.value.indexOf(item.client) === -1) {
-                clients.value.push(item.client)
+    if (indexStore.apiHref && indexStore.apiHref !== '') {
+        loaderStore.isActive = true
+        axios.get(indexStore.apiHref + '/api/sales', {
+            headers: {
+                'Authorization': 'Basic ' + indexStore.token
             }
+        }).then(res => {
+            sales.value = res.data
 
-            if (blocks.value.indexOf(item.block) === -1) {
-                blocks.value.push(item.block)
-            }
+            sales.value.map(item => {
+                // console.log(item);
+
+                if (clients.value.indexOf(item.client) === -1) {
+                    clients.value.push(item.client)
+                }
+
+                if (blocks.value.indexOf(item.block) === -1) {
+                    blocks.value.push(item.block)
+                }
+            })
+
+            console.log(clients.value);
+            console.log(blocks.value);
+
+
+            filterSales()
         })
+            .catch(err => toasterStore.add({
+                title: err.code,
+                descr: err.message,
+                type: 'danger'
+            }))
+            .finally(() => loaderStore.isActive = false)
+    } else {
+        indexStore.servers.map(item => {
+            loaderStore.isActive = true
+            axios.get(item.link + '/api/sales', {
+                headers: {
+                    'Authorization': 'Basic ' + item.token
+                }
+            }).then(res => {
+                sales.value = res.data
 
-        console.log(clients.value);
-        console.log(blocks.value);
+                sales.value.map(item => {
+                    // console.log(item);
+
+                    if (clients.value.indexOf(item.client) === -1) {
+                        clients.value.push(item.client)
+                    }
+
+                    if (blocks.value.indexOf(item.block) === -1) {
+                        blocks.value.push(item.block)
+                    }
+                })
+
+                console.log(clients.value);
+                console.log(blocks.value);
 
 
-        filterSales()
-    })
-        .catch(err => toasterStore.add({
-            title: err.code,
-            descr: err.message,
-            type: 'danger'
-        }))
-        .finally(() => loaderStore.isActive = false)
+                filterSales()
+            })
+                .catch(err => toasterStore.add({
+                    title: err.code,
+                    descr: err.message,
+                    type: 'danger'
+                }))
+                .finally(() => loaderStore.isActive = false)
+        })
+    }
 })
 
 function filterSales() {
